@@ -9,6 +9,8 @@ Final pre-delivery scrub for AI tells. Run on every draft longer than a single s
 
 A draft can use zero banned words and still read like a robot if it leans on dramatic reframes, staccato rhythm, and manufactured punchlines, which is why the scan runs structural before vocab before positive checks before context.
 
+**A draft is read by two kinds of reader, and they weigh different things.** A person notices reframes, punchlines, and buzzwords — the tells this skill has always caught. A statistical detector (Pangram-class, now running on Substack, LinkedIn, and academic tools) barely reads vocabulary; it scores **structural regularity** — uniform sentence length, evenly-shaped paragraphs, formulaic transitions, and the over-smoothed cadence a polishing pass leaves behind. Both readers are always in play, so every pass addresses structure and vocab together — and runs structure first, because it is the higher-signal axis and the one this skill historically under-weighted (in one test, structural rewriting evaded detection ~89% of the time versus ~34% for synonym-swapping). The trap is polishing toward uniformity: smoothing cadence flat lowers human-perceived tells while *raising* a detector's score. Increase variance; never even it out. The cadence check lives in `references/patterns.md` §3.3.
+
 Severity maps to action:
 
 | Severity | Meaning | Action |
@@ -90,6 +92,8 @@ Tally hits. Group vocab hits by category — category count feeds Step 3.
 - 3+ distinct pattern categories triggered
 - Uniform sentence length — three-plus consecutive sentences within 2 words of each other
 
+**Structure can trigger a rewrite on its own.** If cadence and paragraph shape are uniform across the piece (`references/patterns.md` §3.3) — the dominant signal for a statistical detector — go to full rewrite even when the vocab is clean and no other category fired. Patching smooths the surface; it does not add the structural variance a uniform draft is missing.
+
 Otherwise patch mode. Surgical edits only, leave the rest alone.
 
 **Clean-but-hollow flag.** If the draft passes the scan but says nothing — no concrete claim, no specific example, no defensible point of view — flag `[HOLLOW]` explicitly. A clean-style draft with no substance is still broken.
@@ -97,6 +101,8 @@ Otherwise patch mode. Surgical edits only, leave the rest alone.
 ### Step 4 — Rewrite
 
 Produce the rewrite at the depth Step 3 chose. Preserve the writer's voice and argument. The humanizer removes tells; it does not impose a house style on a draft that already has one.
+
+Fix structure before vocabulary. Re-shaping sentence lengths and paragraph blocks does more than swapping words — for a human reader it kills the robotic cadence, and for a detector it is nearly the whole game (word-level edits barely move a classifier). Where the draft is generic, add specific voice: a real detail, a named example, a stated opinion. Do not flatten the result into even cadence on the way out.
 
 For **patch mode**, show only edited spans with minimal surrounding context. For **full rewrite**, produce the full replacement.
 
@@ -111,10 +117,10 @@ The load-bearing step of the pipeline. Do not skip on long-form.
 Two prompts, asked internally, answered in writing:
 
 > **Prompt 1:** "What makes the below so obviously AI generated?"
-> List every residual tell in the rewritten draft. Do not protect your own work. If none, say "None" with a one-sentence justification.
+> List every residual tell in the rewritten draft — vocabulary *and* structure. Read part of it as a statistical detector would: name any uniform sentence-length band, same-shape paragraph runs, formulaic transitions, over-hedged neutral tone, or over-smoothed polish, since that is what the machine weights most heavily. Do not protect your own work. If none, say "None" with a one-sentence justification.
 
 > **Prompt 2:** "Now make it not obviously AI generated."
-> Revise against every tell surfaced in Prompt 1.
+> Revise against every tell surfaced in Prompt 1. Favor restructuring sentences and paragraphs over swapping words — word-level edits barely move a detector, and structure is where both readers are looking.
 
 If Prompt 1 returns "None" and the justification holds, skip Prompt 2 and emit.
 
@@ -319,6 +325,7 @@ Detection patterns synthesized from:
 - conor-humanizer 3-tier vocabulary model
 - jalaalrd/ai-writing-tells quantified budgets
 - "The Humanizer" LinkedIn archetype catalog
+- Pangram/classifier false-positive research (2026): structure — sentence-length variance and paragraph shape — is the dominant statistical-detector signal (structural rewriting ~89% vs. synonym-swap ~34% evasion in one 10M-word test); over-polishing and commercial humanizer tools *increase* detectability over time; encoding tricks (zero-width chars, homoglyphs) are normalized out before scoring
 
 ---
 
@@ -337,6 +344,8 @@ Sometimes a flagged pattern is the right call — a tricolon that's actually ear
 
 - **Don't strip voice to hit the checklist.** Short sentences, fragments, and "And"/"But" starts can be intentional. The humanizer removes tells; it does not normalize every piece into beige corporate prose.
 - **Don't add words for the sake of it.** If a sentence is tight and clear, don't lengthen it to avoid "staccato." The staccato tell is about uniformity across the whole piece, not individual short sentences.
+- **Don't polish toward uniformity.** Smoothing cadence flat, equalizing paragraph shapes, and hedging every claim to neutral reduces *human*-perceived tells while *raising* a statistical detector's score — the two readers pull opposite ways here. Preserve or increase structural variance and keep the small imperfections; a perfectly even draft is a machine signature.
+- **Don't reach for gimmicks.** Zero-width characters, homoglyphs, unicode swaps, forced typos, and commercial "humanizer" tools do not survive a detector — text is normalized before scoring, and a tool's consistent rewrite signature becomes a *new* pattern detectors retrain on. The only durable fix is genuine structural variance and specific voice; if a draft is fully machine-generated, the honest answer is to actually write it.
 - **Don't fabricate replacements.** If you're cutting a vague authority claim ("studies show..."), don't invent a source. Cut the claim or flag it with `[ADD SPECIFIC SOURCE OR CUT]` inline.
 - **Don't rewrite past the user's intent.** If the piece is meant to be punchy (ad headline, stop-scroll caption, subject line), the structural rules loosen. Judgment over mechanical application.
 - **Don't silently approve a hollow draft.** A draft that passes every tell but says nothing specific is still broken. Flag `[HOLLOW]` and let the user decide.

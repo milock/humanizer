@@ -55,10 +55,14 @@ Section or piece ends on a tidy aphorism that sounds quotable but doesn't say an
 - **BEFORE:** "Because in customer success, the details aren't details. They're everything."
 - **AFTER:** "Miss the kickoff agenda and renewal probability drops 15 points. That's most of the variance between a 90% and 105% net retention number."
 
-### 3.3 Staccato Overdose + Uniform Length
-Every paragraph is 1–2 short sentences. Or three-plus consecutive sentences within 2 words of each other. Robotic cadence even if individual sentences are fine.
+### 3.3 Cadence & Structural Regularity — the #1 detector signal
+Uniform rhythm is the strongest signal a statistical classifier keys on, and the one a polishing pass most often makes worse. Two layers:
 
-Rule of thumb: **no three consecutive same-length sentences**. Vary short/medium/long.
+**Sentence cadence (burstiness).** Human writing swings between short, medium, and long sentences; AI and over-polished prose cluster near one length. Flag when three-plus consecutive sentences land within 2 words of each other, or when most of the piece sits inside a single 15–25-word band. Target a visibly mixed distribution — some sentences under 8 words, some over 30. Read-aloud test: if it scans like a metronome, it is too regular.
+
+**Paragraph shape.** Evenly-sized paragraphs (nearly every one 3–4 sentences of similar length) read as machine-built. Vary it — let a one-line paragraph sit next to a dense one.
+
+Rule of thumb: **no three consecutive same-length sentences, and no long run of same-shape paragraphs.** Fix this by *increasing* variance, never by evening the rhythm out. This is the highest-signal structural tell in the catalog — check it on every pass, and treat a uniform-cadence draft as a full-rewrite trigger (§1) even when the vocabulary is already clean.
 
 ### 3.4 Performative Directness
 "Here's the truth." / "Let's be real." / "The reality is..." — throat-clearing dressed as candor.
