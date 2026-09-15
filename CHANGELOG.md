@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented here. The format is loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project follows semantic versioning.
 
+## [1.2.0] - 2026-09-15
+
+### Added
+- Evidence-based voice calibration with six observations, explicit source precedence, and a post-edit voice comparison.
+- Claim-preservation checks covering attribution, uncertainty, negation, rankings, and asks.
+- False-positive guidance and a worked calibration example that preserves deliberate punctuation.
+
+### Changed
+- Existing voice guides work in their original format; profiles apply by publisher and audience, not first-person pronouns alone.
+- Credibility receives a separate scan. Hollow drafts retain missing-evidence flags instead of receiving invented details.
+- Structural and punctuation thresholds are editorial defaults subject to voice and purpose. Removed unsupported detector-performance claims from active skill guidance.
+- Patch mode returns complete drafts under the existing output headers. Detect mode remains read-only.
+- Replaced worked examples that invented customer outcomes or personal experiences with claim-preserving examples.
+
+### Fixed
+- Installer includes examples and documentation needed for voice setup; repeated installation copies resource contents without creating nested directories.
+- Setup describes a portable natural-language invocation instead of implying that this Markdown skill implements CLI flags or environment-variable discovery.
+
 ## [1.1.0] — 2026-07-22
 
 ### Changed

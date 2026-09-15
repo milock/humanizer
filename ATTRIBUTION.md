@@ -4,10 +4,16 @@ Humanizer's pattern catalog and detection methodology synthesize work from sever
 
 ---
 
+## September 2026 editing enhancements
+
+Version 1.2 adapts Michael Lock's `sg-writing-deslop` work in [Super Green's sg-marketplace](https://github.com/Super-Green/sg-marketplace): approved voice takes precedence, facts and asks survive editing, and a final audit checks meaning as well as style. The portable calibration reference expands those ideas without requiring the marketplace plugins.
+
+The research credits below are inherited provenance notes. This release does not establish their numerical claims or treat the catalogue as a validated authorship test. Historical detector-evasion percentages remain only in the changelog's account of v1.1.0; active guidance makes no such claim.
+
 ## Research and pattern sources
 
 ### Carnegie Mellon AI-writing word-frequency study (2025)
-Vocabulary tier system in [`references/patterns.md`](references/patterns.md) §4 draws from CMU's frequency analysis of LLM output vs. human writing. The Tier 1 list (5–20× more common in AI than in human writing) is calibrated against that study's findings.
+Vocabulary tier system in [`references/patterns.md`](references/patterns.md) §4 draws from CMU's frequency analysis of LLM output vs. human writing. The precise study and calibration have not been verified for this release; treat the word tiers as editorial defaults.
 
 ### Wikipedia "Signs of AI Writing"
 Several structural patterns in [`references/patterns.md`](references/patterns.md) §3 — particularly puffery, persuasive authority tropes, vague attributions, and inspirational pivots — are informed by the editor community's running catalog at [Wikipedia: WikiProject AI Cleanup / Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_AI_Cleanup/Signs_of_AI_writing).

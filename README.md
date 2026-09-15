@@ -7,11 +7,19 @@
 [![Anthropic Skills compliant](https://img.shields.io/badge/Anthropic_Skills-compliant-7E3FF2)](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills)
 [![Status: stable](https://img.shields.io/badge/status-stable-brightgreen.svg)](CHANGELOG.md)
 
-Humanizer is a portable writing skill — a single markdown file you can install into Claude Code, paste into Cursor, or use as a system prompt with the Anthropic, OpenAI, or any other API. It catches the structural and vocabulary patterns that make AI-generated writing read as obviously AI-generated, then rewrites the offending spans without flattening the writer's voice.
+Humanizer is a portable writing skill — a Markdown entrypoint with supporting references you can install into Claude Code, paste into Cursor, or use as a system prompt with the Anthropic, OpenAI, or any other API. It catches the structural and vocabulary patterns that make AI-generated writing read as obviously AI-generated, then rewrites the offending spans without flattening the writer's voice.
 
 It's not a stylechecker. It's a final pre-delivery pass that runs before you click send.
 
 ---
+
+## New in v1.2.0
+
+Voice calibration now selects the publisher's guide or sample, records six evidence-based observations, and checks the edited draft against them. Existing profile formats work without conversion. An ordinary scrub needs no setup interview.
+
+The update also preserves claims, uncertainty, and asks; flags missing substance without inventing evidence; and packages the voice templates with the installed skill. Existing output headers stay unchanged.
+
+See the [changelog](CHANGELOG.md), [calibration reference](references/voice-calibration.md), and [worked calibration example](examples/voice-calibration.md).
 
 ## Pipeline at a glance
 
@@ -30,7 +38,7 @@ It's not a stylechecker. It's a final pre-delivery pass that runs before you cli
                                              │
                   ┌──────────────────────────┴──────────────────────────┐
                   │ Step 2: Pattern scan                                │
-                  │   structural → vocab → positive → context           │
+                  │   structure → credibility → vocab → context           │
                   │   (16 named patterns, 3 vocab tiers, 5 punctuation  │
                   │    budgets, banned-opener list)                     │
                   └──────────────────────────┬──────────────────────────┘
@@ -46,7 +54,7 @@ It's not a stylechecker. It's a final pre-delivery pass that runs before you cli
                                              │
                   ┌──────────────────────────┴──────────────────────────┐
                   │ Step 5: Self-audit                                  │
-                  │   "What makes this still obviously AI generated?"   │
+                  │   "Are meaning and voice preserved?"               │
                   │   Revise again if the answer isn't "nothing."       │
                   └──────────────────────────┬──────────────────────────┘
                                              │
@@ -87,26 +95,20 @@ For project-scoped install (just this repo), use `./install.sh --project`.
 
 ### Cursor / Continue / Aider / other harnesses
 
-Either paste the contents of [`SKILL.md`](SKILL.md) into your tool's rules/system-prompt file, or reference the file path. Detailed harness-specific instructions in [`docs/interoperability.md`](docs/interoperability.md).
+Give the agent access to `SKILL.md` and `references/`. If the host cannot read files, include the required reference contents alongside the entrypoint. Detailed harness-specific instructions in [`docs/interoperability.md`](docs/interoperability.md).
 
 ### Raw Anthropic / OpenAI API
 
-Use `SKILL.md` as the system prompt:
+Load the entrypoint and the references into your API integration's system instructions, or provide tools that can read the references on demand. This skill does not make API calls itself.
 
 ```python
-import anthropic, pathlib
+from pathlib import Path
 
-system = pathlib.Path("humanizer/SKILL.md").read_text()
-draft  = pathlib.Path("draft.md").read_text()
-
-client = anthropic.Anthropic()
-msg = client.messages.create(
-    model="claude-opus-4-7",
-    max_tokens=4096,
-    system=system,
-    messages=[{"role": "user", "content": draft}],
-)
-print(msg.content[0].text)
+root = Path("humanizer")
+files = [root / "SKILL.md", *sorted((root / "references").glob("*.md"))]
+system = "\n\n".join(path.read_text() for path in files)
+draft = Path("draft.md").read_text()
+# Pass system and draft to your provider's API client.
 ```
 
 ---
@@ -119,7 +121,7 @@ Humanizer works with zero configuration. To make it sharper for your voice or yo
 humanizer setup
 ```
 
-The skill walks you through a 7-question interview — your channels, sample writing, quirks to preserve, hard nos, punctuation preferences, domain vocabulary — and produces a populated voice profile file you can keep editing.
+The skill walks you through an eight-question interview — your channels, sample writing, quirks to preserve, hard nos, punctuation preferences, domain vocabulary — and produces a populated voice profile file you can keep editing.
 
 You can also skip the interview and copy [`examples/author-voice.example.md`](examples/author-voice.example.md) or [`examples/brand-voice.example.md`](examples/brand-voice.example.md), then fill in the blanks.
 
@@ -149,14 +151,14 @@ Detailed guidance in [`docs/voice-profiles.md`](docs/voice-profiles.md).
 
 ## How Humanizer differs from generic "AI humanizer" tools
 
-Most browser-based humanizer SaaS products take AI-generated text and run it through paraphrasing models. They lower detector scores; they don't make the writing better.
+Humanizer reviews finished prose inside an editing workflow. Its thresholds are editorial heuristics, not validated authorship tests or detector-score predictions.
 
-Humanizer is the opposite shape:
+The editing priorities are:
 
 - **Structural before vocabulary.** Most of the AI-tell signal is in *how* the sentences are arranged, not which words are picked. Swapping "leverage" for "use" is necessary but rarely sufficient. Humanizer scans 16 named structural patterns first.
 - **Voice-preserving by default.** The skill takes a voice profile (yours or your brand's) and refuses to flatten it. Short sentences, "And"/"But" starts, deliberate fragments — all preserved when the profile says so.
 - **Honest about hollow drafts.** A draft that passes every AI-tells check but says nothing specific gets flagged `[HOLLOW]` rather than silently approved. The model won't manufacture facts to fill the gap.
-- **Self-audited.** After the rewrite, the skill asks itself *"what makes this still obviously AI generated?"* and revises again. This second pass catches more than any single sweep.
+- **Self-audited.** After the rewrite, the skill asks itself whether patterns remain and meaning and voice survived and revises again. This second pass catches more than any single sweep.
 - **Auditable output.** You see what was flagged, what changed, and what the model thinks is still off. No black-box paraphrase.
 - **Not a detector-evasion tool.** Humanizer is for shipping copy you wrote with AI assistance, not laundering text past Turnitin. The framing matters: better drafts, not lower detection scores.
 

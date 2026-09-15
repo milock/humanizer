@@ -18,7 +18,7 @@ There are two flavors:
 - **Author voice profile** — first-person writing. Emails, Slack, LinkedIn (personal), internal memos, feedback notes.
 - **Brand voice profile** — organizational/client-facing writing. Blog, case studies, landing pages, marketing emails, LinkedIn (org).
 
-You can have one, both, or neither. The skill picks the right one based on channel.
+You can have one, both, or neither. The skill selects the publisher's voice using the request and audience, not pronouns alone. Explicit instructions outrank inferred sample habits. Existing profile formats work without conversion.
 
 Templates: [`examples/author-voice.example.md`](../examples/author-voice.example.md), [`examples/brand-voice.example.md`](../examples/brand-voice.example.md).
 
@@ -30,7 +30,7 @@ Voice profile content varies in usefulness. Some sections do real work; others a
 
 ### High-leverage (these change the rewrite)
 
-- **Sample paragraphs** of your real writing. Three short ones is plenty. The skill reads register, sentence-length distribution, paragraph openers, and punctuation habits from these — not from your self-description, which is rarely accurate. **If you only fill in one section, fill in this one.**
+- **Sample paragraphs** of your real writing. Three short ones is plenty. The skill reads register, sentence-length distribution, paragraph openers, and punctuation habits from these — while explicit instructions establish your preferred style. **If you only fill in one section, fill in this one.**
 - **Hard nos.** Phrases or tropes you never want. The skill treats these as additions to the universal banned list (§7). Be specific — "never use 'in today's [anything]'" is operational; "be authentic" isn't.
 - **Quirks to preserve.** Patterns the skill should not flag. The defaults in §8 cover common ones (sentence fragments, "And"/"But" starts, one-line paragraphs in casual channels). List anything additional that's specific to you.
 - **Punctuation preferences.** Em dash defaults to "max 1 per 500 words"; if you ban them entirely, say so.
@@ -44,7 +44,7 @@ Voice profile content varies in usefulness. Some sections do real work; others a
 
 ### Low-leverage (skip unless you really care)
 
-- **Self-description of your "register"** ("warm and conversational"). Almost never matches the samples. The skill calibrates from the samples; the description gets ignored.
+- **Self-description of your "register"** ("warm and conversational"). Too broad to resolve many line-level choices without examples. Use samples as evidence of habits, while honoring explicit instructions about the desired register.
 - **Lists of writers/brands you admire.** Doesn't translate to detectable patterns.
 - **Mood adjectives** ("approachable yet authoritative"). Decorative.
 
@@ -64,14 +64,14 @@ Three short real samples beat one long fabricated one.
 - Things you wish you wrote that way — the skill needs the actual baseline
 - AI-generated text you "made sound like you" — defeats the purpose
 
-If you don't have anything written down, paste a transcript of yourself talking about a work topic for 60 seconds. Spoken register is closer to natural writing than carefully edited prose for most people.
+If you don't have anything written down, paste a transcript of yourself talking about a work topic for 60 seconds. Label it as spoken language; its rhythm may not transfer to written prose.
 
 ---
 
 ## When NOT to load a voice profile
 
-- **Anonymous register** (Reddit replies, anonymous forums). Loading a profile would make the writing recognizable as you.
-- **Pure technical/regulatory content.** Voice doesn't matter; correctness does.
+- **Anonymous register** (Reddit replies, anonymous forums). Use only a profile appropriate to the requested anonymous register.
+- **Technical/regulatory content.** Preserve code, legal text, and precise terms. Apply a relevant voice guide only to surrounding prose.
 - **One-shot drafts in someone else's voice** (writing as a colleague, ghostwriting). Use a one-time sample paste instead — Step 1 in the skill walks through this.
 
 ---
@@ -102,7 +102,7 @@ Profiles aren't static. If the skill flags the same pattern three times across d
 
 That's the cue to update §8 (author carve-outs) of your profile so the skill stops flagging it. Same for words that should be exempt from Tier 2/3 density checks — add them to the "domain vocabulary" section.
 
-If your role/audience changes substantially, run `humanizer setup --replace` and re-do the interview from scratch.
+If your role/audience changes substantially, ask Humanizer to replace the profile using new samples and preferences.
 
 ---
 
@@ -110,3 +110,7 @@ If your role/audience changes substantially, run `humanizer setup --replace` and
 
 - [Author voice profile template](../examples/author-voice.example.md)
 - [Brand voice profile template](../examples/brand-voice.example.md)
+
+## Calibration in v1.2
+
+Use `Humanize this draft using the voice profile at <path>` or paste a sample. The six-dimension calibration and post-edit comparison live in [references/voice-calibration.md](../references/voice-calibration.md). Calibration stays within the current task unless you request a saved profile. Missing samples yield stated preferences, not fabricated measurements.

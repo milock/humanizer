@@ -54,13 +54,19 @@ if [[ -f "${DEST_FILE}" ]]; then
 fi
 
 cp "${SOURCE}" "${DEST_FILE}"
-cp -R "${REFERENCES_DIR}" "${DEST_DIR}/references"
+# Copy contents into stable destinations so repeat installs do not nest folders.
+for resource in references examples docs; do
+    mkdir -p "${DEST_DIR}/${resource}"
+    cp -R "${SCRIPT_DIR}/${resource}/." "${DEST_DIR}/${resource}/"
+done
+cp "${SCRIPT_DIR}/ATTRIBUTION.md" "${DEST_DIR}/ATTRIBUTION.md"
 
 echo ""
 echo "Humanizer installed to ${DEST_DIR}"
 echo "  - SKILL.md (core)"
-echo "  - references/ (progressive-disclosure files: patterns.md, channels.md)"
+echo "  - references/ (progressive-disclosure files: patterns, channels, voice calibration)"
 echo ""
+echo "  - examples/ and docs/ (voice setup and worked examples)"
 echo "Try it:"
 echo "  In Claude Code, type:  /humanizer"
 echo "  Or:                    humanize this draft"
