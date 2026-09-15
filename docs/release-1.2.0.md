@@ -1,6 +1,6 @@
-# v1.2.0 release preparation
+# v1.2.0 release validation
 
-Status: release candidate, not tagged or published. The changelog is intentionally Unreleased.
+Release date: 2026-09-15. Publication is tracked on the [GitHub release](https://github.com/milock/humanizer/releases/tag/v1.2.0).
 
 ## Scope
 
@@ -16,10 +16,6 @@ Calibrate from the intended publisher's voice source, preserve claims and asks, 
 - One forward exercise preserved a date, number, uncertainty, request, technical term, code, and explicit punctuation preferences without editing them.
 - Two qualitative baseline/current simulations covered a hollow update and competing brand/personal profiles. Both versions could return safe output; the new version removes contradictory instructions. These are reviewer exercises, not controlled model benchmarks or evidence of a measured quality gain.
 
-## Release steps
+## Publication
 
-1. Review and merge the release pull request after CI passes.
-2. Replace Unreleased with the actual release date and remove the README's release-candidate label.
-3. Tag the reviewed commit as v1.2.0 and publish release notes based on CHANGELOG.md.
-
-No tag or published release is part of this preparation.
+Michael approved publication on 2026-09-15. The release uses the reviewed pull request and its passing CI result; the tag points to the merged commit.

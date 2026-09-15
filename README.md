@@ -13,7 +13,7 @@ It's not a stylechecker. It's a final pre-delivery pass that runs before you cli
 
 ---
 
-## v1.2.0 release candidate
+## New in v1.2.0
 
 Voice calibration now selects the publisher's guide or sample, records six evidence-based observations, and checks the edited draft against them. Existing profile formats work without conversion. An ordinary scrub needs no setup interview.
 
