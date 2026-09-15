@@ -24,11 +24,13 @@ jobs:
         run: |
           test -f references/patterns.md
           test -f references/channels.md
+          test -f references/voice-calibration.md
 
       - name: Confirm example files exist
         run: |
           test -f examples/author-voice.example.md
           test -f examples/brand-voice.example.md
+          test -f examples/voice-calibration.md
           test -f examples/before-after-email.md
           test -f examples/before-after-linkedin.md
           test -f examples/before-after-blog.md

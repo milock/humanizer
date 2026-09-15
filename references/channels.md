@@ -28,27 +28,29 @@ Strongest cue wins. If two cues point to different channels, ask rather than gue
 
 ## Channel × Strictness Matrix
 
-**S** = strict (flag), **R** = relaxed (house style — don't flag), **I** = inverted (required), **N** = normal.
+Approved voice and instructions for this draft outrank every default in this table. Do not infer a required pronoun or persona from the channel alone.
+
+**S** = strict (flag), **R** = relaxed (house style — don't flag), **I** = format convention (subject to the request), **N** = normal.
 
 | Channel | One-line paras | Staccato | "We" voice | First-person "I" | Voice profile to load |
 |---|---|---|---|---|---|
 | Newsletter (editorial) | R | R | N | R | brand or author |
-| Blog post / case study | S | S | I | S | brand |
-| Marketing email | N | N | I | S | brand |
+| Blog post / case study | S | S | N | N | brand |
+| Marketing email | N | N | N | N | brand |
 | Email (1:1) | N | N | N | R | author |
-| LinkedIn — personal | R | R | N | I | author |
+| LinkedIn — personal | R | R | N | R | author |
 | LinkedIn — organizational | R | R | N | R | brand |
 | Slack (team or 1:1) | R | R | N | R | author |
 | Meeting agenda | I (bullets) | N | N | N | none (format rules apply) |
 | Feedback / coaching note | R | R | N | R | author |
-| Landing page / ad | R | R | I | S | brand |
-| Reddit reply | R | R | N | R (required) | none (anonymous register) |
+| Landing page / ad | R | R | N | N | brand |
+| Reddit reply | R | R | N | R | none (anonymous register) |
 
 ---
 
 ## Per-Channel Hollow Failure Modes
 
-A draft can pass the AI-tells scan and still fail. Flag `[HOLLOW]` if:
+Assess substance against the draft's purpose. These are diagnostic cues, not required ingredients: a notification need not contain an ask, a useful qualitative example need not contain a number, and an agenda may legitimately include time estimates. Flag `[HOLLOW]` when missing information prevents the piece from doing its job:
 
 | Channel | Hollow failure mode |
 |---|---|
@@ -59,7 +61,7 @@ A draft can pass the AI-tells scan and still fail. Flag `[HOLLOW]` if:
 | LinkedIn — organizational | Predicts audience pain instead of reporting what was observed; generic platitude |
 | Slack — team | Over-explains context before the ask; ask buried |
 | Slack — 1:1 (terse register) | More than 2 sentences of preamble before the point |
-| Meeting agenda | Bullets without owners; talk tracks or time estimates present |
+| Meeting agenda | Decisions or actions whose owners are unclear |
 | Landing page / ad | No specific proof point (stat, customer, outcome) above the fold |
 | Feedback note | Abstract ("be more proactive") without the specific behavior + moment |
 | Reddit reply | Generic hot-take without a specific counter-point or personal experience; reads like it was written without reading the thread |
@@ -68,14 +70,7 @@ A draft can pass the AI-tells scan and still fail. Flag `[HOLLOW]` if:
 
 ## When to Ask vs. Decide
 
-**Auto-decide** when ≥2 cues agree. **Ask** when:
-- Only one weak cue matches
-- LinkedIn detected but voice ambiguous between personal and organizational
-- Email detected but register unclear (marketing blast vs. 1:1)
-- Slack detected but audience unclear (team channel vs. terse 1:1 — strictness differs)
-- Draft <50 words with no format cues
-
-Ask format: *"Looks like [channel A] or [channel B]. Which — and who's the audience?"* Never guess on audience; channel strictness pivots on it.
+Infer the channel from the request and the strongest cues. Ask only when two plausible channels or audiences would materially change the edit. With weak cues and no consequential conflict, preserve the draft's register and note the assumption instead of requiring an interview.
 
 ---
 
@@ -90,6 +85,8 @@ Some patterns look AI-ish in isolation but are part of an author's actual voice.
 - **Hyphens with spaces** instead of em dashes, if the author or brand profile specifies it.
 - **Specific terms of address or honorifics** the audience expects (titled professionals, formal salutations) — load these from the voice profile.
 
-The test: would this pattern read as natural if the author spoke it out loud? If yes, leave it. If the piece is client-facing brand voice (blog post, case study, landing page), these carve-outs tighten — default to the Channel × Strictness Matrix above.
+The test is whether the pattern serves the intended voice and audience. Approved brand exceptions also outrank the matrix. Use the matrix only where no applicable voice guidance decides the issue.
 
 If no voice profile is loaded, treat the patterns above as low-priority — flag only when stacked with other tells.
+
+For evidence-based calibration, read `references/voice-calibration.md`. Preserve code and expected results in procedures; do not rewrite regular instructions merely to vary cadence.
